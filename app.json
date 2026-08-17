@@ -1,24 +1,44 @@
 {
   "expo": {
-    "name": "carpim-deseni",
+    "name": "Çarpım Deseni",
     "slug": "carpim-deseni",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "icon": "./assets/icon.png",
+    "scheme": "carpimdeseni",
     "userInterfaceStyle": "light",
+    "backgroundColor": "#F4EFE4",
+    "primaryColor": "#2C5F8A",
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "requireFullScreen": true,
+      "bundleIdentifier": "com.aren.carpimdeseni",
+      "infoPlist": {
+        "UIStatusBarHidden": true,
+        "UIViewControllerBasedStatusBarAppearance": false
+      }
     },
     "android": {
+      "package": "com.aren.carpimdeseni",
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
+        "backgroundColor": "#2C5F8A",
         "foregroundImage": "./assets/android-icon-foreground.png",
-        "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 320,
+          "resizeMode": "contain",
+          "backgroundColor": "#2C5F8A"
+        }
+      ]
+    ]
   }
 }
