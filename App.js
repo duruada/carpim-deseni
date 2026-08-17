@@ -5,7 +5,11 @@ import { StatusBar } from 'expo-status-bar';
 
 import { GAMES } from './src/games';
 import { colors, createScale } from './src/theme';
+import DiceScreen from './src/components/DiceScreen';
+import FractionScreen from './src/components/FractionScreen';
+import GameIcon from './src/components/GameIcon';
 import MarketScreen from './src/components/MarketScreen';
+import MeasureScreen from './src/components/MeasureScreen';
 import MenuScreen from './src/components/MenuScreen';
 import MirrorScreen from './src/components/MirrorScreen';
 import MultiplesScreen from './src/components/MultiplesScreen';
@@ -16,7 +20,10 @@ const SCREENS = {
   multiples: MultiplesScreen,
   table: TableScreen,
   numberline: NumberLineScreen,
+  fraction: FractionScreen,
   market: MarketScreen,
+  measure: MeasureScreen,
+  dice: DiceScreen,
   mirror: MirrorScreen,
 };
 
@@ -40,7 +47,7 @@ function Root() {
   return (
     <SafeAreaView style={styles.root} edges={['top', 'bottom', 'left', 'right']}>
       <View style={[styles.page, { padding: s(12), gap: s(10) }]}>
-        <View style={styles.header}>
+        <View style={[styles.header, { gap: s(9) }]}>
           {game ? (
             <>
               <Pressable
@@ -56,9 +63,8 @@ function Root() {
               >
                 <Text style={{ fontSize: s(18), color: colors.inkSoft }}>‹</Text>
               </Pressable>
-              <Text style={[styles.title, { fontSize: s(19), marginLeft: s(10) }]}>
-                {game.title}
-              </Text>
+              <GameIcon name={game.key} color={game.color} size={s(24)} />
+              <Text style={[styles.title, { fontSize: s(19) }]}>{game.title}</Text>
             </>
           ) : (
             <Text style={[styles.title, styles.titleHome, { fontSize: s(19) }]}>

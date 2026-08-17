@@ -1,6 +1,6 @@
 # Ada'nın Matematik Oyunları
 
-Beş küçük oyun. iPad ve Android tablette çalışır; Expo (React Native) ile
+Sekiz küçük oyun. iPad ve Android tablette çalışır; Expo (React Native) ile
 yazıldı.
 
 [Adam Asmaca](../Adam%20Asmaca) alıştırma yapıyor: soruyor, doğru/yanlış
@@ -15,8 +15,14 @@ Oyunlar bilerek farklı kasları çalıştırıyor:
 | **Katlar** | keşif | Yüzler tablosunda bir sayının katları yanıyor |
 | **Çarpım Tablosu** | sezgi | Dikdörtgeni boyuyor: çarpma bir alandır |
 | **Sayı Doğrusu** | sezgi | Zıplayarak ilerliyor: çarpma tekrarlı toplamadır |
+| **Pizza Kesirleri** | keşif | İki pizza yan yana: 2/4 ile 1/2 aynı mı? |
 | **Market** | uygulama | Bütçeyle alışveriş, hesabı çocuk tutuyor |
+| **Ölçüm Avı** | tahmin | Önce tahmin, sonra cetvelle ölçüm, sonra fark |
+| **Zar Deneyi** | olasılık | İki zar, biriken histogram, çan eğrisi |
 | **Ayna Çizim** | üretim | Simetri çizimi — sınav değil, sanat |
+
+Her oyunun ikonu [GameIcon.js](src/components/GameIcon.js) içinde geometriyle
+çizili: dosya yok, her boyutta net, oyunun rengini alıyor.
 
 ## Oyunlar
 
@@ -50,6 +56,34 @@ nerede durduğu da görünüyor; sayı hissi bunu ezberle gelmiyor.
 söylemiyor** — kasaya giderken tutarı kendisi hesaplıyor. Bütçeyi aşarsa
 "neyi çıkarırsın?" diye soruyor. Buradaki motivasyon matematik değil yetki:
 kendi kararını veriyor, sonucunu görüyor.
+
+### Pizza Kesirleri
+
+İki pizza yan yana. Her birinin dilim sayısı ayrı seçiliyor (2, 3, 4, 6, 8, 12),
+dilimlere dokununca doluyor. Eşit olduklarında kutu yeşile dönüyor ve
+`2/4 = 1/2` yazıyor.
+
+Kesirlerde çocukların en çok takıldığı yer denklik. Anlatarak öğretmek zor,
+yan yana görünce kendiliğinden anlaşılıyor — o yüzden burada soru yok, iki
+pizza var.
+
+### Ölçüm Avı
+
+Bir nesne seçiliyor, önce **tahmin** ediliyor, sonra gerçek cetvelle ölçülüyor.
+Uygulama farkı gösteriyor ve en yakın tahmini hatırlıyor.
+
+Uygulama ölçmüyor — ekran kalibrasyonu güvenilir olmadığı için zaten ölçemez.
+Bunu kusur değil özellik yaptım: çocuk gerçek bir cetvelle evde dolaşıyor,
+tablet sadece hedefi veriyor ve farkı tutuyor. Tahmin becerisi sayı hissinin
+en doğrudan ölçüsü.
+
+### Zar Deneyi
+
+Önce hangi toplamın kazanacağı tahmin ediliyor, sonra 1, 10 ya da 100 atış
+yapılıyor. Histogram biriktikçe çan eğrisi kendiliğinden çıkıyor.
+
+7'nin neden kazandığı anlatılmıyor: 7'yi veren altı farklı zar çifti var,
+2'yi veren bir tane. Bu, sütunlara bakarak fark edilecek bir şey.
 
 ### Ayna Çizim
 
@@ -100,10 +134,14 @@ Apple Developer üyeliği gerekiyor.
 | [App.js](App.js) | Menü ve gezinme |
 | [src/games.js](src/games.js) | Oyun listesi — yeni oyun buraya bir satır |
 | [src/components/MenuScreen.js](src/components/MenuScreen.js) | Oyun kartları |
+| [src/components/GameIcon.js](src/components/GameIcon.js) | Oyun ikonları (geometri) |
 | [src/components/MultiplesScreen.js](src/components/MultiplesScreen.js) | Katlar |
 | [src/components/TableScreen.js](src/components/TableScreen.js) | Çarpım tablosu |
 | [src/components/NumberLineScreen.js](src/components/NumberLineScreen.js) | Sayı doğrusu |
+| [src/components/FractionScreen.js](src/components/FractionScreen.js) | Pizza kesirleri |
 | [src/components/MarketScreen.js](src/components/MarketScreen.js) | Market |
+| [src/components/MeasureScreen.js](src/components/MeasureScreen.js) | Ölçüm avı |
+| [src/components/DiceScreen.js](src/components/DiceScreen.js) | Zar deneyi |
 | [src/components/MirrorScreen.js](src/components/MirrorScreen.js) | Ayna çizim |
 | [src/theme.js](src/theme.js) | Renkler ve ölçekleme |
 
