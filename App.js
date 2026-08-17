@@ -3,14 +3,22 @@ import { Pressable, StyleSheet, Text, View, useWindowDimensions } from 'react-na
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { StatusBar } from 'expo-status-bar';
 
+import { GAMES } from './src/games';
 import { colors, createScale } from './src/theme';
+import MarketScreen from './src/components/MarketScreen';
+import MenuScreen from './src/components/MenuScreen';
+import MirrorScreen from './src/components/MirrorScreen';
 import MultiplesScreen from './src/components/MultiplesScreen';
+import NumberLineScreen from './src/components/NumberLineScreen';
 import TableScreen from './src/components/TableScreen';
 
-const TABS = [
-  { key: 'multiples', label: 'Katlar' },
-  { key: 'table', label: 'Tablo' },
-];
+const SCREENS = {
+  multiples: MultiplesScreen,
+  table: TableScreen,
+  numberline: NumberLineScreen,
+  market: MarketScreen,
+  mirror: MirrorScreen,
+};
 
 export default function App() {
   return (
@@ -24,47 +32,46 @@ export default function App() {
 function Root() {
   const { width, height } = useWindowDimensions();
   const s = useMemo(() => createScale(width, height), [width, height]);
-  const [tab, setTab] = useState('multiples');
+  const [active, setActive] = useState(null);
+
+  const game = active ? GAMES.find((g) => g.key === active) : null;
+  const Screen = active ? SCREENS[active] : null;
 
   return (
     <SafeAreaView style={styles.root} edges={['top', 'bottom', 'left', 'right']}>
       <View style={[styles.page, { padding: s(12), gap: s(10) }]}>
-        <Text style={[styles.title, { fontSize: s(19) }]}>Ada'nın Çarpım Deseni</Text>
-
-        {tab === 'multiples' ? <MultiplesScreen s={s} /> : <TableScreen s={s} />}
-
-        <View style={[styles.tabs, { gap: s(8) }]}>
-          {TABS.map((t) => {
-            const on = tab === t.key;
-            return (
+        <View style={styles.header}>
+          {game ? (
+            <>
               <Pressable
-                key={t.key}
-                onPress={() => setTab(t.key)}
+                onPress={() => setActive(null)}
+                hitSlop={12}
                 style={({ pressed }) => [
-                  styles.tab,
-                  {
-                    paddingVertical: s(11),
-                    borderRadius: s(24),
-                    backgroundColor: on ? colors.ink : colors.card,
-                    borderColor: on ? colors.ink : colors.line,
-                  },
-                  pressed && !on && { backgroundColor: colors.line },
+                  styles.back,
+                  { width: s(38), height: s(38), borderRadius: s(19) },
+                  pressed && { backgroundColor: colors.line },
                 ]}
-                accessibilityRole="tab"
-                accessibilityState={{ selected: on }}
+                accessibilityRole="button"
+                accessibilityLabel="Oyun listesine dön"
               >
-                <Text
-                  style={[
-                    styles.tabLabel,
-                    { fontSize: s(15), color: on ? '#FFFFFF' : colors.inkSoft },
-                  ]}
-                >
-                  {t.label}
-                </Text>
+                <Text style={{ fontSize: s(18), color: colors.inkSoft }}>‹</Text>
               </Pressable>
-            );
-          })}
+              <Text style={[styles.title, { fontSize: s(19), marginLeft: s(10) }]}>
+                {game.title}
+              </Text>
+            </>
+          ) : (
+            <Text style={[styles.title, styles.titleHome, { fontSize: s(19) }]}>
+              Ada'nın Matematik Oyunları
+            </Text>
+          )}
         </View>
+
+        {Screen ? (
+          <Screen s={s} />
+        ) : (
+          <MenuScreen onPick={setActive} s={s} wide={width > s(620)} />
+        )}
       </View>
     </SafeAreaView>
   );
@@ -73,8 +80,14 @@ function Root() {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.paper },
   page: { flex: 1 },
-  title: { textAlign: 'center', fontWeight: '800', color: colors.ink },
-  tabs: { flexDirection: 'row' },
-  tab: { flex: 1, alignItems: 'center', borderWidth: 2 },
-  tabLabel: { fontWeight: '800' },
+  header: { flexDirection: 'row', alignItems: 'center' },
+  back: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: colors.line,
+    backgroundColor: colors.card,
+  },
+  title: { fontWeight: '800', color: colors.ink },
+  titleHome: { flex: 1, textAlign: 'center' },
 });
